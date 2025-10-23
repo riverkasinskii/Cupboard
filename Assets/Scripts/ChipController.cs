@@ -4,6 +4,9 @@ using UnityEngine;
 public sealed class ChipController : MonoBehaviour
 {
     [SerializeField]
+    private GraphBuilder _builder;
+
+    [SerializeField]
     private float endDragOffset = 40f;
 
     [SerializeField]
@@ -18,6 +21,7 @@ public sealed class ChipController : MonoBehaviour
         {
             chip.OnCurrentChipRequestDirection += CurrentChipRequestDirection;
             chip.OnEndDragHandler += EndDragHandler;
+            chip.GraphBuilder = _builder;
         }
     }
         

@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -214,6 +215,7 @@ MonoBehaviour:
   directionThreshold: 25
   <RectTransform>k__BackingField: {fileID: 62645335}
   _animation: {fileID: 62645339}
+  moveSpeed: 300
 --- !u!114 &62645339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,12 +674,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -851,6 +853,7 @@ MonoBehaviour:
   directionThreshold: 25
   <RectTransform>k__BackingField: {fileID: 529115797}
   _animation: {fileID: 529115800}
+  moveSpeed: 300
 --- !u!1 &573584593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1653,7 @@ MonoBehaviour:
   directionThreshold: 25
   <RectTransform>k__BackingField: {fileID: 819641997}
   _animation: {fileID: 819642000}
+  moveSpeed: 300
 --- !u!1 &852505195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,6 +1804,7 @@ MonoBehaviour:
   directionThreshold: 25
   <RectTransform>k__BackingField: {fileID: 866061901}
   _animation: {fileID: 866061904}
+  moveSpeed: 300
 --- !u!1 &1059238195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,6 +1934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3536bfe6758895d479010ac698263553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _builder: {fileID: 1938396225}
   endDragOffset: 40
   chips:
   - {fileID: 62645338}
@@ -2263,6 +2269,7 @@ MonoBehaviour:
   directionThreshold: 25
   <RectTransform>k__BackingField: {fileID: 1546631515}
   _animation: {fileID: 1546631518}
+  moveSpeed: 300
 --- !u!1 &1579365331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2379,7 +2386,7 @@ GameObject:
   - component: {fileID: 1701889488}
   - component: {fileID: 1701889487}
   m_Layer: 5
-  m_Name: EightPoint
+  m_Name: EighthPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2686,6 +2693,7 @@ MonoBehaviour:
   directionThreshold: 25
   <RectTransform>k__BackingField: {fileID: 1733112047}
   _animation: {fileID: 1733112050}
+  moveSpeed: 300
 --- !u!1 &1930066230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2802,6 +2810,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1938396223}
+  - component: {fileID: 1938396225}
   - component: {fileID: 1938396224}
   m_Layer: 5
   m_Name: Points
@@ -2860,6 +2869,20 @@ MonoBehaviour:
   - {fileID: 622682641}
   - {fileID: 1701889488}
   - {fileID: 1930066235}
+--- !u!114 &1938396225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938396222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeb5ae25962e554280296b4df6f77ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <NodesParent>k__BackingField: {fileID: 1938396223}
+  connectionThreshold: 500
 --- !u!1 &1973784891
 GameObject:
   m_ObjectHideFlags: 0
