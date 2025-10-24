@@ -213,6 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionThreshold: 1
+  rectTransform: {fileID: 62645335}
 --- !u!114 &62645339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,6 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionThreshold: 1
+  rectTransform: {fileID: 529115797}
 --- !u!1 &573584593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,6 +1647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionThreshold: 1
+  rectTransform: {fileID: 819641997}
 --- !u!1 &852505195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1793,6 +1796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionThreshold: 1
+  rectTransform: {fileID: 866061901}
 --- !u!1 &1059238195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,7 +1912,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 1100, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1082206537
 MonoBehaviour:
@@ -1922,7 +1926,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3536bfe6758895d479010ac698263553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _builder: {fileID: 1938396225}
+  _worldBoundRectTransform: {fileID: 1082206536}
+  _graphBuilder: {fileID: 1938396225}
   _canvas: {fileID: 1579365334}
   chips:
   - {fileID: 62645338}
@@ -2255,6 +2260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionThreshold: 1
+  rectTransform: {fileID: 1546631515}
 --- !u!1 &1579365331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2676,6 +2682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionThreshold: 1
+  rectTransform: {fileID: 1733112047}
 --- !u!1 &1930066230
 GameObject:
   m_ObjectHideFlags: 0
