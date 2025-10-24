@@ -7,58 +7,66 @@ public sealed class ChipController : MonoBehaviour
     private GraphBuilder _builder;
 
     [SerializeField]
-    private float endDragOffset = 40f;
-
+    private Canvas _canvas;
+        
     [SerializeField]
     private List<Chip> chips = new();
 
     [SerializeField]
     private ConnectionsBetweenPoints connectionsBetweenPoints;
 
-    private void OnEnable()
+    private void Awake()
     {
         foreach (var chip in chips)
         {
-            chip.OnCurrentChipRequestDirection += CurrentChipRequestDirection;
-            chip.OnEndDragHandler += EndDragHandler;
             chip.GraphBuilder = _builder;
-        }
-    }
-        
-    private void OnDisable()
-    {
-        foreach (var chip in chips)
-        {
-            chip.OnCurrentChipRequestDirection -= CurrentChipRequestDirection;
-            chip.OnEndDragHandler -= EndDragHandler;
-        }
-    }
-
-    private void CurrentChipRequestDirection(Chip chip)
-    {
-        List<Direction> directions = connectionsBetweenPoints.GetAllowedDirections(chip.RectTransform.position);
-        if (directions != null)
-        {
-            chip.AllowedDirections = directions;
+            chip.Canvas = _canvas;
         }        
     }
 
-    private void EndDragHandler(Chip chip, Vector2 startPosition)
-    {        
-        List<Point> points = connectionsBetweenPoints.Points;
-        for (int i = 0; i < points.Count; i++)
-        {
-            Vector2 screenPositionA = RectTransformUtility.WorldToScreenPoint(null, chip.RectTransform.position);
-            Vector2 screenPositionB = RectTransformUtility.WorldToScreenPoint(null, points[i].RectTransform.position);
-            if (points.Count - 1 == i)
-            {
-                chip.RectTransform.position = startPosition;
-            }
-            if (Vector2.Distance(screenPositionA, screenPositionB) <= endDragOffset)
-            {
-                chip.RectTransform.position = points[i].RectTransform.position;
-                break;
-            }           
-        }           
-    }
+    //private void OnEnable()
+    //{
+    //    foreach (var chip in chips)
+    //    {
+    //        chip.OnCurrentChipRequestDirection += CurrentChipRequestDirection;
+    //        chip.OnEndDragHandler += EndDragHandler;            
+    //    }
+    //}
+        
+    //private void OnDisable()
+    //{
+    //    foreach (var chip in chips)
+    //    {
+    //        chip.OnCurrentChipRequestDirection -= CurrentChipRequestDirection;
+    //        chip.OnEndDragHandler -= EndDragHandler;
+    //    }
+    //}
+
+    //private void CurrentChipRequestDirection(Chip chip)
+    //{
+    //    List<Direction> directions = connectionsBetweenPoints.GetAllowedDirections(chip.RectTransform.position);
+    //    if (directions != null)
+    //    {
+    //        chip.AllowedDirections = directions;
+    //    }        
+    //}
+
+    //private void EndDragHandler(Chip chip, Vector2 startPosition)
+    //{        
+    //    List<Point> points = connectionsBetweenPoints.Points;
+    //    for (int i = 0; i < points.Count; i++)
+    //    {
+    //        Vector2 screenPositionA = RectTransformUtility.WorldToScreenPoint(null, chip.RectTransform.position);
+    //        Vector2 screenPositionB = RectTransformUtility.WorldToScreenPoint(null, points[i].RectTransform.position);
+    //        if (points.Count - 1 == i)
+    //        {
+    //            chip.RectTransform.position = startPosition;
+    //        }
+    //        if (Vector2.Distance(screenPositionA, screenPositionB) <= endDragOffset)
+    //        {
+    //            chip.RectTransform.position = points[i].RectTransform.position;
+    //            break;
+    //        }           
+    //    }           
+    //}
 }

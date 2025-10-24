@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections;
-using System;
 using System.Collections.Generic;
 
 public enum Direction 
@@ -12,267 +10,173 @@ public enum Direction
     Right
 }
 
-//public class Chip : MonoBehaviour, IBeginDragHandler, IEndDragHandler
-//{
-//    [field: SerializeField]
-//    public RectTransform RectTransform { get; private set; }
-//    public List<Direction> AllowedDirections { get; set; } = new();
-
-//    public event Action<Chip> OnCurrentChipRequestDirection;
-//    public event Action<Chip, Vector2> OnEndDragHandler; 
-
-//    public GraphBuilder graphBuilder;
-//    public Transform currentNode;
-//    public float moveSpeed = 300f;
-
-//    private RectTransform rect;
-//    private Vector2 dragStartPos;
-//    private bool isMoving = false;
-
-//    private void Start()
-//    {
-//        rect = GetComponent<RectTransform>();
-
-//        if (currentNode == null && graphBuilder != null)
-//        {
-//            float minDist = float.MaxValue;
-//            foreach (var node in graphBuilder.Graph.Keys)
-//            {
-//                float d = Vector2.Distance(rect.anchoredPosition, node.GetComponent<RectTransform>().anchoredPosition);
-//                if (d < minDist)
-//                {
-//                    minDist = d;
-//                    currentNode = node;
-//                }
-//            }
-//        }
-//    }
-
-//    void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
-//    {
-//        if (isMoving) return;
-//        dragStartPos = eventData.position;
-//    }
-
-//    void IEndDragHandler.OnEndDrag(PointerEventData eventData)
-//    {
-//        if (isMoving || graphBuilder == null || currentNode == null) return;
-
-//        Vector2 dragEndPos = eventData.position;
-//        Vector2 delta = dragEndPos - dragStartPos;
-
-//        if (delta.magnitude < 20f) return; // защита от случайных кликов
-
-//        Direction direction;
-
-//        if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
-//            direction = delta.x > 0 ? Direction.Right : Direction.Left;
-//        else
-//            direction = delta.y > 0 ? Direction.Up : Direction.Down;
-
-//        TryMove(direction);
-//    }
-
-//    private void TryMove(Direction direction)
-//    {
-//        if (!graphBuilder.Graph.ContainsKey(currentNode)) return;
-
-//        var connections = graphBuilder.Graph[currentNode];
-
-//        foreach (var connection in connections)
-//        {
-//            if (connection.dir == direction)
-//            {
-//                StartCoroutine(MoveTo(connection.nextPoint));
-//                return;
-//            }
-//        }
-
-//        Debug.Log($"Нет пути {direction} из {currentNode.name}");
-//    }
-
-//    private IEnumerator MoveTo(Transform nextNode)
-//    {
-//        isMoving = true;
-
-//        Vector2 start = rect.anchoredPosition;
-//        Vector2 target = nextNode.GetComponent<RectTransform>().anchoredPosition;
-
-//        while (Vector2.Distance(rect.anchoredPosition, target) > 0.1f)
-//        {
-//            rect.anchoredPosition = Vector2.MoveTowards(rect.anchoredPosition, target, moveSpeed * Time.deltaTime);
-//            yield return null;
-//        }
-
-//        rect.anchoredPosition = target;
-//        currentNode = nextNode;
-//        isMoving = false;
-//    }
-//}
-
-
-public sealed class Chip : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public sealed class Chip : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public event Action<Chip> OnCurrentChipRequestDirection;
-    public event Action<Chip, Vector2> OnEndDragHandler;
-    public List<Direction> AllowedDirections { get; set; } = new();
-
-    [SerializeField]
-    private float directionThreshold = 25f;
-
-    [field: SerializeField]
-    public RectTransform RectTransform { get; private set; }
+    public Canvas Canvas { get; set; }
 
     public GraphBuilder GraphBuilder { get; set; }
-
+        
     [SerializeField]
-    private PulsingAnimation _animation;
+    private float directionThreshold = 1f;
 
-    [SerializeField]
-    private float moveSpeed = 300f;
-
+    private RectTransform rectTransform;
+    private bool isDragging = false;
     private Vector2 startDragPosition;
-    private Vector2 startPosition;
-    private readonly Direction? currentDirection = null;
+    private Vector2 lastMousePosition;
     private Transform currentNode;
-    private bool isMoving = false;
 
+    private readonly List<Direction> allowedDirections = new();
+    private Direction? currentDirection = null;
 
     private void Start()
     {
-        RectTransform = GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>();
+        
+        if (currentNode == null)
+            currentNode = GetClosestNode();
 
-        if (currentNode == null && GraphBuilder != null)
-        {
-            float minDist = float.MaxValue;
-            foreach (var node in GraphBuilder.Graph.Keys)
-            {
-                float d = Vector2.Distance(RectTransform.anchoredPosition, node.GetComponent<RectTransform>().anchoredPosition);
-                if (d < minDist)
-                {
-                    minDist = d;
-                    currentNode = node;
-                }
-            }
-        }
+        UpdateAllowedDirections();
     }
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
-    {
-        //startDragPosition = RectTransform.anchoredPosition;
-        //startPosition = RectTransform.position;
-        //currentDirection = null;
-        if (isMoving) 
-            return;
-        startPosition = eventData.position;
-        _animation.Highlight(true);
-    }
-
-    void IDragHandler.OnDrag(PointerEventData eventData)
-    {
-        //OnCurrentChipRequestDirection?.Invoke(this);
-        //Vector2 delta = eventData.position - eventData.pressPosition;
-
-        //if (currentDirection == null && delta.magnitude > directionThreshold)
-        //{
-        //    currentDirection = DetectDirection(delta);
-
-        //    if (!AllowedDirections.Contains(currentDirection.Value))
-        //    {
-        //        currentDirection = null;
-        //    }
-        //}
-
-        //if (currentDirection != null)
-        //{
-        //    Vector2 newPosition = startDragPosition;
-
-        //    switch (currentDirection)
-        //    {
-        //        case Direction.Up:
-        //            newPosition.y = startDragPosition.y + Mathf.Max(0, delta.y);
-        //            break;
-        //        case Direction.Down:
-        //            newPosition.y = startDragPosition.y + Mathf.Min(0, delta.y);
-        //            break;
-        //        case Direction.Left:
-        //            newPosition.x = startDragPosition.x + Mathf.Min(0, delta.x);
-        //            break;
-        //        case Direction.Right:
-        //            newPosition.x = startDragPosition.x + Mathf.Max(0, delta.x);
-        //            break;
-        //    }
-        //    RectTransform.anchoredPosition = newPosition;
-        //}
+    {        
+        isDragging = true;
+        startDragPosition = eventData.position;
+        lastMousePosition = startDragPosition;
+        currentDirection = null;
     }
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
-        //OnEndDragHandler?.Invoke(this, startPosition);
-        if (isMoving || GraphBuilder == null || currentNode == null) return;
-
-        Vector2 dragEndPos = eventData.position;
-        Vector2 delta = dragEndPos - startPosition;
-
-        if (delta.magnitude < 20f) 
-            return;
-
-        Direction direction;
-
-        if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
-            direction = delta.x > 0 ? Direction.Right : Direction.Left;
-        else
-            direction = delta.y > 0 ? Direction.Up : Direction.Down;
-
-        TryMove(direction);
-        _animation.Highlight(false);
+        isDragging = false;
+        currentDirection = null;
+                
+        Transform nearest = GetClosestNode();
+        if (nearest != null)
+        {
+            rectTransform.anchoredPosition = nearest.GetComponent<RectTransform>().anchoredPosition;
+            currentNode = nearest;
+            UpdateAllowedDirections();
+        }
     }
 
-    private void TryMove(Direction direction)
+    private void Update()
     {
-        if (!GraphBuilder.Graph.ContainsKey(currentNode)) 
+        if (!isDragging) 
             return;
+                
+        Vector2 currentMousePosition = ScreenToLocalInRectangle(Input.mousePosition);
+        Vector2 previousMousePosition = ScreenToLocalInRectangle(lastMousePosition);                
+        Vector2 deltaCanvas = currentMousePosition - previousMousePosition;
+        lastMousePosition = Input.mousePosition;
+        
+        if (currentDirection == null)
+        {            
+            Vector3 lossyScale = Canvas.transform.lossyScale;
+            if (lossyScale.x < 0f)
+                deltaCanvas.x = -deltaCanvas.x;
+            if (lossyScale.y < 0f)
+                deltaCanvas.y = -deltaCanvas.y;
 
-        var connections = GraphBuilder.Graph[currentNode];
-
-        foreach (var connection in connections)
-        {
-            if (connection.dir == direction)
+            if (deltaCanvas.magnitude > directionThreshold)
             {
-                StartCoroutine(MoveTo(connection.nextPoint));
-                return;
+                Direction guessedDirection;
+                if (Mathf.Abs(deltaCanvas.x) >= Mathf.Abs(deltaCanvas.y))
+                {
+                    guessedDirection = (deltaCanvas.x >= 0f) ? Direction.Right : Direction.Left;
+                }
+                else
+                {
+                    guessedDirection = (deltaCanvas.y >= 0f) ? Direction.Up : Direction.Down;
+                }
+
+                Debug.Log(guessedDirection);
+                // Проверяем, разрешено ли это направление графом
+                if (allowedDirections.Contains(guessedDirection))
+                {                    
+                    currentDirection = guessedDirection;                        
+                }
+                else
+                {                    
+                    isDragging = false;
+                    return;
+                }
             }
         }
+
+        // Если направление выбрано — двигаем фишку только по этой оси
+        if (currentDirection != null)
+        {
+            Vector2 move = Vector2.zero;
+
+            switch (currentDirection)
+            {
+                case Direction.Right:
+                    move.x = Mathf.Max(0, deltaCanvas.x);
+                    break;
+                case Direction.Left:
+                    move.x = Mathf.Min(0, deltaCanvas.x);
+                    break;
+                case Direction.Up:
+                    move.y = Mathf.Max(0, deltaCanvas.y);
+                    break;
+                case Direction.Down:
+                    move.y = Mathf.Min(0, deltaCanvas.y);
+                    break;
+            }
+
+            rectTransform.anchoredPosition += move;
+        }
     }
 
-    private IEnumerator MoveTo(Transform nextNode)
+    private Vector2 ScreenToLocalInRectangle(Vector2 screenPosition)
     {
-        isMoving = true;
-
-        Vector2 start = RectTransform.anchoredPosition;
-        Vector2 target = nextNode.GetComponent<RectTransform>().anchoredPosition;
-
-        while (Vector2.Distance(RectTransform.anchoredPosition, target) > 0.1f)
-        {
-            RectTransform.anchoredPosition = Vector2.MoveTowards(RectTransform.anchoredPosition, target, moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-
-        RectTransform.anchoredPosition = target;
-        currentNode = nextNode;
-        isMoving = false;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            Canvas.transform as RectTransform,
+            screenPosition,
+            Canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Canvas.worldCamera,
+            out Vector2 localPosition
+        );
+        return localPosition;
     }
 
-    private Direction DetectDirection(Vector2 delta)
+
+    // Получаем список разрешённых направлений
+    private void UpdateAllowedDirections()
     {
-        if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+        allowedDirections.Clear();
+
+        if (currentNode == null || !GraphBuilder.Graph.ContainsKey(currentNode))
+            return;
+
+        foreach (var node in GraphBuilder.Graph[currentNode])
+            allowedDirections.Add(node.dir);
+    }
+
+    // Находим ближайший узел (для фиксации при отпускании)
+    private Transform GetClosestNode()
+    {
+        float minDist = float.MaxValue;
+        Transform nearest = null;
+
+        foreach (var node in GraphBuilder.Graph.Keys)
         {
-            return delta.x > 0 ? Direction.Right : Direction.Left;
+            float d = Vector2.Distance(rectTransform.anchoredPosition, node.GetComponent<RectTransform>().anchoredPosition);
+            if (d < minDist)
+            {
+                minDist = d;
+                nearest = node;
+            }
         }
-        else
-        {
-            return delta.y > 0 ? Direction.Up : Direction.Down;
-        }
+
+        return nearest;
+    }
+
+    void IDragHandler.OnDrag(PointerEventData eventData)
+    {
+        //EventSystem
     }
 }
+
+
 

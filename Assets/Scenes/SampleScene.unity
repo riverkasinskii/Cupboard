@@ -212,10 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733afc934f8c3a447856945f12c14c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionThreshold: 25
-  <RectTransform>k__BackingField: {fileID: 62645335}
-  _animation: {fileID: 62645339}
-  moveSpeed: 300
+  directionThreshold: 1
 --- !u!114 &62645339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,10 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733afc934f8c3a447856945f12c14c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionThreshold: 25
-  <RectTransform>k__BackingField: {fileID: 529115797}
-  _animation: {fileID: 529115800}
-  moveSpeed: 300
+  directionThreshold: 1
 --- !u!1 &573584593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,10 +1644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733afc934f8c3a447856945f12c14c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionThreshold: 25
-  <RectTransform>k__BackingField: {fileID: 819641997}
-  _animation: {fileID: 819642000}
-  moveSpeed: 300
+  directionThreshold: 1
 --- !u!1 &852505195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,10 +1792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733afc934f8c3a447856945f12c14c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionThreshold: 25
-  <RectTransform>k__BackingField: {fileID: 866061901}
-  _animation: {fileID: 866061904}
-  moveSpeed: 300
+  directionThreshold: 1
 --- !u!1 &1059238195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,7 +1923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _builder: {fileID: 1938396225}
-  endDragOffset: 40
+  _canvas: {fileID: 1579365334}
   chips:
   - {fileID: 62645338}
   - {fileID: 1546631519}
@@ -2266,10 +2254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733afc934f8c3a447856945f12c14c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionThreshold: 25
-  <RectTransform>k__BackingField: {fileID: 1546631515}
-  _animation: {fileID: 1546631518}
-  moveSpeed: 300
+  directionThreshold: 1
 --- !u!1 &1579365331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2690,10 +2675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733afc934f8c3a447856945f12c14c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionThreshold: 25
-  <RectTransform>k__BackingField: {fileID: 1733112047}
-  _animation: {fileID: 1733112050}
-  moveSpeed: 300
+  directionThreshold: 1
 --- !u!1 &1930066230
 GameObject:
   m_ObjectHideFlags: 0
