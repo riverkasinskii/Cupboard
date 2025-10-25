@@ -1,0 +1,57 @@
+{
+  "chipCount": 6,
+  "nodeCount": 9,
+
+  "firstNode": {
+    "x": -500,
+    "y": 350
+  },
+  "secondNode": {
+    "x": 0,
+    "y": 350
+  },
+  "thirdNode": {
+    "x": 500,
+    "y": 350
+  },
+
+  "fourthNode": {
+    "x": -500,
+    "y": 0
+  },
+  "fifthNode": {
+    "x": 0,
+    "y": 0
+  },
+  "sixthNode": {
+    "x": 500,
+    "y": 0
+  },
+
+  "seventhNode": {
+    "x": -500,
+    "y": -350
+  },
+  "eighthNode": {
+    "x": 0,
+    "y": -350
+  },
+  "ninthNode": {
+    "x": 500,
+    "y": -350
+  },
+
+  "initialChipsLocation": [ 1, 2, 3, 7, 8, 9 ],
+  "finishChipsLocation": [ 7, 8, 9, 1, 2, 3 ],
+
+  "countPairs": 8,
+
+  "firstPair": [ 1, 4 ],
+  "secondPair": [ 2, 5 ],
+  "thirdPair": [ 3, 6 ],
+  "fourthPair": [ 4, 5 ],
+  "fifthPair": [ 5, 6 ],
+  "sixthPair": [ 4, 7 ],
+  "seventhPair": [ 5, 8 ],
+  "eighthPair": [ 6, 9 ]
+}

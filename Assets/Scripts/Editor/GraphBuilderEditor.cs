@@ -7,12 +7,7 @@ public sealed class GraphBuilderEditor : Editor
     private void OnSceneGUI()
     {
         GraphBuilder builder = (GraphBuilder)target;
-
-        if (builder.NodesParent == null || builder.Graph.Count == 0)
-        {
-            return;
-        }
-
+                
         Handles.color = Color.cyan;
 
         foreach (var kvp in builder.Graph)
@@ -50,7 +45,7 @@ public sealed class GraphBuilderEditor : Editor
         {
             builder.BuildGraph();
         }
-
+                
         if (builder.Graph.Count > 0)
         {
             GUILayout.Label($"Узлов в графе: {builder.Graph.Count}", EditorStyles.boldLabel);
